@@ -7,6 +7,6 @@ public record UpsertContactRequest(
     string Password,
     string Category,
     string Subcategory,
-    int PhoneNumber,
+    string PhoneNumber,
     DateTime birthDate
 );
