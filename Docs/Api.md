@@ -24,8 +24,8 @@ POST {host}/contacts
 
 ```json
 {
-    "name": "John",
-    "surname": "Cena",
+    "firstName": "John",
+    "lastName": "Cena",
     "email": "magicJohn@gmail.com",
     "password": "wHyDoIeVenHaVeYoUrPaSsWoRd?!123",
     "category": "business",
@@ -49,8 +49,8 @@ Location: {host}/contacts/{id}
 {
     "id": "00000000-0000-0000-0000-000000000000",
     "lastModifiedDateTime": "2022-04-06T12:00:00",
-    "name": "John",
-    "surname": "Cena",
+    "firstName": "John",
+    "lastName": "Cena",
     "email": "magicJohn@gmail.com",
     "password": "wHyDoIeVenHaVeYoUrPaSsWoRd?!123",
     "category": "business",
@@ -84,8 +84,8 @@ GET {host}/contacts/{id}
 {
     "id": "00000000-0000-0000-0000-000000000000",
     "lastModifiedDateTime": "2022-04-06T12:00:00",
-    "name": "John",
-    "surname": "Cena",
+    "firstName": "John",
+    "lastName": "Cena",
     "email": "magicJohn@gmail.com",
     "password": "wHyDoIeVenHaVeYoUrPaSsWoRd?!123",
     "category": "business",
@@ -111,8 +111,8 @@ PUT {host}/contacts/{id}
 
 ```json
 {
-    "name": "John",
-    "surname": "Cena",
+    "firstName": "John",
+    "lastName": "Cena",
     "email": "magicJohn@gmail.com",
     "password": "wHyDoIeVenHaVeYoUrPaSsWoRd?!123",
     "category": "other",
@@ -142,8 +142,8 @@ Location: {host}/contacts/{id}
 {
     "id": "00000000-0000-0000-0000-000000000000",
     "lastModifiedDateTime": "2022-04-06T12:00:00",
-    "name": "John",
-    "surname": "Cena",
+    "firstName": "John",
+    "lastName": "Cena",
     "email": "magicJohn@gmail.com",
     "password": "wHyDoIeVenHaVeYoUrPaSsWoRd?!123",
     "category": "business",
