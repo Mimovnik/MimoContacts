@@ -49,5 +49,14 @@ public static class Errors
                     + "contain at least one lowercase letter,"
                     + "contain at least one digit"
             );
+
+        public static Error InvalidCategory =>
+            Error.Validation(
+                code: "Contact.InvalidCategory",
+                description: "Contact category must be "
+                    + Models.Contact.ContactCategory.Business.ToString() + " or "
+                    + Models.Contact.ContactCategory.Private.ToString() + " or "
+                    + Models.Contact.ContactCategory.Other.ToString()
+            );
     }
 }

@@ -8,5 +8,5 @@ public record UpsertContactRequest(
     string Category,
     string Subcategory,
     string PhoneNumber,
-    DateTime birthDate
+    DateTime BirthDate
 );
