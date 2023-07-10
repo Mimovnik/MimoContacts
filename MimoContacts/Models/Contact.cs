@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using ErrorOr;
+using MimoContacts.Contracts.Contacts;
 using MimoContacts.ServiceErrors;
 
 namespace MimoContacts.Models;
@@ -35,7 +36,7 @@ public class Contact
     public string PhoneNumber { get; private set; }
     public DateTime BirthDate { get; private set; }
 
-    public Contact(
+    private Contact(
         Guid id,
         DateTime lastModified,
         string firstName,
@@ -48,15 +49,15 @@ public class Contact
         DateTime birthDate)
     {
         Id = id;
-        LastModified = lastModified;
+        LastModified = DateTime.SpecifyKind(lastModified, DateTimeKind.Utc);
         FirstName = firstName;
         LastName = lastName;
         Email = email;
         Password = password;
-        this.Category = category;
+        Category = category;
         Subcategory = subcategory;
         PhoneNumber = phoneNumber;
-        BirthDate = birthDate;
+        BirthDate = DateTime.SpecifyKind(birthDate, DateTimeKind.Utc);
     }
 
     public static ErrorOr<Contact> Create(
@@ -64,7 +65,7 @@ public class Contact
         string lastName,
         string email,
         string password,
-        ContactCategory category,
+        string category,
         string subcategory,
         string phoneNumber,
         DateTime birthDate,
@@ -99,6 +100,17 @@ public class Contact
             errors.Add(Errors.Contact.InvalidPhoneNumber);
         }
 
+        ContactCategory contactCategory = ContactCategory.Other;
+        try
+        {
+            contactCategory = ParseCategory(category);
+        }
+        catch (ArgumentException)
+        {
+            errors.Add(Errors.Contact.InvalidCategory);
+        }
+
+
         if (errors.Count > 0)
         {
             return errors;
@@ -111,7 +123,7 @@ public class Contact
             lastName,
             email,
             password,
-            category,
+            contactCategory,
             subcategory,
             phoneNumber,
             birthDate
@@ -193,5 +205,39 @@ public class Contact
     private static bool ContainsDigit(string password)
     {
         return password.Any(char.IsDigit);
+    }
+
+    public static ContactCategory ParseCategory(string value)
+    {
+        return (ContactCategory)Enum.Parse(typeof(ContactCategory), value, true);
+    }
+
+    public static ErrorOr<Contact> From(Guid id, UpsertContactRequest request)
+    {
+        return Create(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password,
+            request.Category,
+            request.Subcategory,
+            request.PhoneNumber,
+            request.BirthDate,
+            id
+        );
+    }
+
+    public static ErrorOr<Contact> From(CreateContactRequest request)
+    {
+        return Create(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password,
+            request.Category,
+            request.Subcategory,
+            request.PhoneNumber,
+            request.BirthDate
+        );
     }
 }
