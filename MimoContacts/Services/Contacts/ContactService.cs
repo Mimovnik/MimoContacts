@@ -22,6 +22,17 @@ public class ContactService : IContactService
         return Result.Created;
     }
 
+    public ErrorOr<List<Contact>> GetAllContacts()
+    {
+        List<Contact> result = _context.Contacts.ToList();
+        if (result.Count == 0)
+        {
+            return Errors.Contact.NotFound;
+        }
+
+        return result;
+    }
+
     public async Task<ErrorOr<Contact>> GetContact(Guid id)
     {
         var findResult = await _context.Contacts.FindAsync(id);
