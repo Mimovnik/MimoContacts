@@ -212,7 +212,7 @@ public class Contact
         return (ContactCategory)Enum.Parse(typeof(ContactCategory), value, true);
     }
 
-    public static ErrorOr<Contact> From(Guid id, UpsertContactRequest request)
+    public static ErrorOr<Contact> From(Guid id, UpdateContactRequest request)
     {
         return Create(
             request.FirstName,

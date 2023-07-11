@@ -1,6 +1,6 @@
 namespace MimoContacts.Contracts.Contacts;
 
-public record UpsertContactRequest(
+public record UpdateContactRequest(
     string FirstName,
     string LastName,
     string Email,

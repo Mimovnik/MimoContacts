@@ -55,7 +55,7 @@ public class ContactsController : ApiController
     }
 
     [HttpPut("{id:guid}")]
-    public IActionResult Upsert(Guid id, UpsertContactRequest request)
+    public IActionResult Update(Guid id, UpdateContactRequest request)
     {
         ErrorOr<Contact> toModelResult = Contact.From(id, request);
 
@@ -66,10 +66,9 @@ public class ContactsController : ApiController
 
         var contact = toModelResult.Value;
 
-        ErrorOr<UpsertedContactResult> result = _contactService.UpsertContact(contact).Result;
+        ErrorOr<Updated> result = _contactService.UpdateContact(contact).Result;
         return result.Match(
-            upserted => upserted.IsNewlyCreated ?
-                CreatedAtGet(contact) : NoContent(),
+            updated => Ok(),
             errors => Problem(errors));
     }
 

@@ -172,13 +172,13 @@ PUT {host}/contacts/{id}
 ### Update Contact Responses
 
 ```js
-204 No Content
+200 Ok 
 ```
 
 or
 
 ```js
-201 Created
+404 NotFound 
 ```
 
 ```yml
