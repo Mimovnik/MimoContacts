@@ -45,23 +45,21 @@ public class ContactService : IContactService
         return findResult;
     }
 
-    public async Task<ErrorOr<UpsertedContactResult>> UpsertContact(Contact contact)
+    public async Task<ErrorOr<Updated>> UpdateContact(Contact contact)
     {
         var findResult = await _context.Contacts.FindAsync(contact.Id);
 
-        bool IsNewlyCreated = findResult == null;
-
-        if (IsNewlyCreated)
+        if (findResult == null)
         {
-            _context.Contacts.Add(contact);
+            return Errors.Contact.NotFound;
         }
         else
         {
-            findResult = contact;
+            _context.Contacts.Entry(findResult).CurrentValues.SetValues(contact);
         }
 
         await _context.SaveChangesAsync();
-        return new UpsertedContactResult(IsNewlyCreated);
+        return Result.Updated;
     }
 
     public async Task<ErrorOr<Deleted>> DeleteContact(Guid id)
