@@ -212,6 +212,20 @@ public class Contact
         return (ContactCategory)Enum.Parse(typeof(ContactCategory), value, true);
     }
 
+    public static ErrorOr<Contact> From(CreateContactRequest request)
+    {
+        return Create(
+            request.FirstName,
+            request.LastName,
+            request.Email,
+            request.Password,
+            request.Category,
+            request.Subcategory,
+            request.PhoneNumber,
+            request.BirthDate
+        );
+    }
+
     public static ErrorOr<Contact> From(Guid id, UpdateContactRequest request)
     {
         return Create(
@@ -227,17 +241,18 @@ public class Contact
         );
     }
 
-    public static ErrorOr<Contact> From(CreateContactRequest request)
+    public static ErrorOr<Contact> From(Guid id, PatchContactRequest request, Contact original)
     {
         return Create(
-            request.FirstName,
-            request.LastName,
-            request.Email,
-            request.Password,
-            request.Category,
-            request.Subcategory,
-            request.PhoneNumber,
-            request.BirthDate
+            request.FirstName ?? original.FirstName,
+            request.LastName ?? original.LastName,
+            request.Email ?? original.Email,
+            request.Password ?? original.Password,
+            request.Category ?? original.Category.ToString(),
+            request.Subcategory ?? original.Subcategory,
+            request.PhoneNumber ?? original.PhoneNumber,
+            request.BirthDate ?? original.BirthDate,
+            id
         );
     }
 }

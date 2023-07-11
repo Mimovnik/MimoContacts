@@ -12,6 +12,9 @@
   - [Update Contact](#update-contact)
     - [Update Contact Request](#update-contact-request)
     - [Update Contact Responses](#update-contact-responses)
+  - [Patch Contact](#patch-contact)
+    - [Patch Contact Request](#patch-contact-request)
+    - [Patch Contact Responses](#patch-contact-responses)
   - [Delete Contact](#delete-contact)
     - [Delete Contact Request](#delete-contact-request)
     - [Delete Contact Responses](#delete-contact-responses)
@@ -181,23 +184,33 @@ or
 404 NotFound 
 ```
 
-```yml
-Location: {host}/contacts/{id}
+## Patch Contact
+
+### Patch Contact Request
+
+```js
+PATCH {host}/contacts/{id}
 ```
 
 ```json
 {
-    "id": "00000000-0000-0000-0000-000000000000",
-    "lastModifiedDateTime": "2022-04-06T12:00:00",
     "firstName": "John",
     "lastName": "Cena",
-    "email": "magicJohn@gmail.com",
-    "password": "wHyDoIeVenHaVeYoUrPaSsWoRd?!123",
-    "category": "business",
-    "subcategory": "client",
-    "phoneNumber": "123456789",
+    "phoneNumber": "987654321",
     "birthDate": "1977-04-23",
 }
+```
+
+### Patch Contact Responses
+
+```js
+200 Ok 
+```
+
+or
+
+```js
+404 NotFound 
 ```
 
 ## Delete Contact
