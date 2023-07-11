@@ -34,6 +34,16 @@ public class ContactsController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpGet]
+    public IActionResult Get()
+    {
+        ErrorOr<List<Contact>> result = _contactService.GetAllContacts();
+
+        return result.Match(
+            contacts => Ok(MapContactsResponse(contacts)),
+            errors => Problem(errors));
+    }
+
     [HttpGet("{id:guid}")]
     public IActionResult Get(Guid id)
     {
@@ -72,6 +82,11 @@ public class ContactsController : ApiController
             deleted => NoContent(),
             errors => Problem(errors)
         );
+    }
+
+    private List<ContactResponse> MapContactsResponse(List<Contact> contacts)
+    {
+        return contacts.Select(MapContactResponse).ToList();
     }
 
     private ContactResponse MapContactResponse(Contact contact)
