@@ -72,6 +72,32 @@ public class ContactsController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpPatch("{id:guid}")]
+    public IActionResult Patch(Guid id, PatchContactRequest request)
+    {
+        ErrorOr<Contact> findResult = _contactService.GetContact(id).Result;
+
+        if (findResult.IsError)
+        {
+            return Problem(findResult.Errors);
+        }
+
+        var original = findResult.Value;
+        ErrorOr<Contact> toModelResult = Contact.From(id, request, original);
+
+        if (toModelResult.IsError)
+        {
+            return Problem(toModelResult.Errors);
+        }
+
+        var patched = toModelResult.Value;
+
+        ErrorOr<Updated> result = _contactService.UpdateContact(patched).Result;
+        return result.Match(
+            updated => Ok(),
+            errors => Problem(errors));
+    }
+
     [HttpDelete("{id:guid}")]
     public IActionResult Delete(Guid id)
     {
